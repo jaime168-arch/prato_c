@@ -132,3 +132,67 @@ width: 100%;
     margin-bottom: 0;
     max-width: 300px;
 }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow);
+}
+
+th, td {
+  padding: 14px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 0.95rem;
+}
+
+th {
+  background-color: var(--primary);
+  color: #ffffff;
+  font-weight: 600;
+  letter-spacing: 0.025em;
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+tr:hover {
+  background-color: #f1f5f9;
+}
+
+.btn-editar,
+.btn-excluir {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-editar {
+  color: var(--info);
+  background-color: rgba(41, 128, 185, 0.1);
+  margin-right: 8px;
+}
+
+.btn-editar:hover {
+  background-color: var(--info);
+  color: #ffffff;
+}
+
+.btn-excluir {
+  color: var(--danger);
+  background-color: rgba(231, 76, 60, 0.1);
+}
+
+.btn-excluir:hover {
+  background-color: var(--danger);
+  color: #ffffff;
+}
