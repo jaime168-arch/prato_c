@@ -9,5 +9,9 @@ if (!$id) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nome =
+    $nome = trim($_POST['nome']);
+    $descricao = trim($_POST['descricao']);
+    $preco = trim($_POST['preco']);
+    $categoria = trim($_POST['categoria']);
+    $usuario_id = trim($_POST['usuarios_id']);
 }
