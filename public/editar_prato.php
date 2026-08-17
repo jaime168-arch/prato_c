@@ -33,3 +33,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 }
+
+$stmt = $pdo->prepare("SELECT * FROM pratos WHERE id = :id");
+$stmt->bindParam(':id', $id);
+$stmt->execute();
+$prato = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if (!$prato ){
+    header('Location: index.php')  
+    exit;  
+}
+
+$stmt_users = $pdo->query("SELECT * FROM usuarios ORDER BY nome ASC");
+$usuarios = $stmt_users->fetchAll(PDO::FETCH_ASSOC);
+?>
