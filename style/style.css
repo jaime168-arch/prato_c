@@ -196,3 +196,102 @@ tr:hover {
   background-color: var(--danger);
   color: #ffffff;
 }
+
+.main-header {
+  margin-bottom: 28px;
+}
+
+.main-header p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-top: 4px;
+}
+
+.card-header {
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 12px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+}
+
+.form-row .form-group {
+  flex: 1;
+}
+
+
+.filtro-form {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.filtro-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn-limpar {
+  color: var(--danger);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.btn-limpar:hover {
+  text-decoration: underline;
+}
+
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.font-bold { font-weight: 600; }
+.text-muted { color: var(--text-muted); font-size: 0.9rem; }
+.text-center { text-align: center; }
+
+.preco-tag {
+  color: var(--success);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.badge {
+  background-color: #e2e8f0;
+  color: var(--text-main);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.autor-info {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 32px !important;
+  color: var(--text-muted);
+}
