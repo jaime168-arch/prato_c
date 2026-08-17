@@ -8,7 +8,8 @@ Aplicação web para cadastro e gestão de pratos e usuários, junto com PHP e S
 
 ## Passo a passo para a instalação e execução do código
 
-## Funcionalidades
+
+## Funcionalidades funcionais
 
 RF1 — Cadastrar Usuário: O sistema deve permitir cadastrar usuários informando nome e e-mail.
 
@@ -21,6 +22,8 @@ RF4 — Editar Prato: O sistema deve permitir alterar as informações de um pra
 RF5 — Excluir Prato: O sistema deve permitir excluir um prato já cadastrado.
 
 RF6 — Listar Pratos por Usuário: O sistema deve permitir visualizar os pratos cadastrados por um determinado usuário.
+
+## Funcionalidades não funcionais
 
 RNF1 — Validação dos Campos: O sistema não deve permitir o cadastro de usuários ou pratos com campos obrigatórios vazios.
 
