@@ -47,3 +47,34 @@ if (!$prato ){
 $stmt_users = $pdo->query("SELECT * FROM usuarios ORDER BY nome ASC");
 $usuarios = $stmt_users->fetchAll(PDO::FETCH_ASSOC);
 ?>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edição de prato</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+<div class="card" style="max-width: 500px; margin: 40px auto;">
+    <h2>Editar pratos</h2>
+    <form action="" method="POST">
+        <input type="text" name="nome" value="<?= htmlspecialchars($prato['nome']) ?>" required>
+        <textarea name="descricao" required><?= htmlspecialchars($prato['descricao']) ?></textarea>
+            <input type="number" step="0.01" name="preco" value="<?= $prato['preco'] ?>" required>
+            <input type="text" name="categoria" value="<?= htmlspecialchars($prato['categoria']) ?>" required>
+            
+            <select name="usuario_id" required>
+                <?php foreach ($usuarios as $u): ?>
+                    <option value="<?= $u['id'] ?>" <?= $prato['usuario_id'] == $u['id'] ? 'selected' : '' ?>>
+                        <?= htmlspecialchars($u['nome']) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+
+            <button type="submit">Salvar Alterações</button>
+            <a href="index.php" style="display: block; text-align: center; margin-top: 10px;">Cancelar</a>
+        </form>
+    </div>
+</body>
+</html>
