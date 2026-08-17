@@ -1,6 +1,14 @@
-## Cadastros de pratos 
+## Sistema de gerenciamento de pratos no restaurante
 
-## Requisitos do Sistema
+Aplicação web para cadastro e gestão de pratos e usuários, junto com PHP e SQL
+
+## Requisitos
+- XAMPP (Apache + Mysql/Mariadb)
+- Navegador (Edge)
+
+## Passo a passo para a instalação e execução do código
+
+## Funcionalidades
 
 RF1 — Cadastrar Usuário: O sistema deve permitir cadastrar usuários informando nome e e-mail.
 
