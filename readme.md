@@ -33,3 +33,18 @@ RF6 — Listar Pratos por Usuário: O sistema deve permitir visualizar os pratos
 RNF1 — Validação dos Campos: O sistema não deve permitir o cadastro de usuários ou pratos com campos obrigatórios vazios.
 
 RNF2 — Segurança dos Dados: As operações que recebem informações fornecidas pelo usuário deverão utilizar Prepared Statements.
+
+## Estrutura do projeto
+
+restaurante/
+
+├── database/
+banco.sql
+├── Infra/
+conexao.php
+├── index.php
+├── Public/ editar_prato.php
+├── excluir_prato.php
+├── Style/
+style.css
+└── README.md
