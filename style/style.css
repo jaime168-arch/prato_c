@@ -108,3 +108,27 @@ form button:hover {
 form button:active {
     transform:scale(0.99);
 }
+
+.filtro-box {
+    background: var(--bg-card);
+    padding: 20px 24px;
+    border-radius: var(--radius);
+    border:1px solid var(--border-color);
+    margin-bottom: 24px;
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.filtro-box form {
+display: flex;
+align-items: center;
+gap: 12px;
+width: 100%;
+}
+
+.filtro-box select {
+    margin-bottom: 0;
+    max-width: 300px;
+}
