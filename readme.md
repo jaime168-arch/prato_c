@@ -44,7 +44,7 @@ banco.sql
 conexao.php
 ├── index.php
 ├── Public/ editar_prato.php
-├── excluir_prato.php
+excluir_prato.php
 ├── Style/
 style.css
 └── README.md
