@@ -1,3 +1,8 @@
 CREATE DATABASE IF NOT EXISTS restaurante_Ícaro;
 USE restaurante_Ícaro;
 
+CREATE TABLE IF NOT EXISTS clientes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE
+);
