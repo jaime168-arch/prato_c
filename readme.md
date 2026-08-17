@@ -8,6 +8,11 @@ Aplicação web para cadastro e gestão de pratos e usuários, junto com PHP e S
 
 ## Passo a passo para a instalação e execução do código
 
+1. Execute os módulos **Apache** e **MySQL** no Painel de Controle do XAMPP.
+2. Copie a pasta `restaurante` para o diretório de hospedagem local (`C:/xampp/htdocs/restaurante`).
+3. Acesse o **phpMyAdmin** no seu navegador: `http://localhost/phpmyadmin/`.
+4. Crie o banco de dados `restaurante` e importe as tabelas utilizando o conteúdo do arquivo `banco.sql`.
+5. Abra a aplicação no navegador acessando: `http://localhost/restaurante/`.
 
 ## Funcionalidades funcionais
 
