@@ -2,7 +2,7 @@
 $host = "localhost";
 $usuario = "root";
 $senha = "";
-$banco = "restaurante_ícaro"
+$banco = "restaurante_ícaro";
 
 try {
     $pdo = new PDO ("mysql:host=$host;dbname=$banco;charset=utf8", $usuario, $senha);
