@@ -1,101 +1,87 @@
 <?php
-require_once 'conexao.php';
 
-$id = $_GET['id'] ?? null;
+include '../infra/connect.php';
+if (!isset($conn) || $conn === null) {
+    die('Erro ao conectar com o banco de dados.');
+}
 
-if (!$id) {
-    header('Location: index.php');
-    exit;
+$id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
+
+$sql = "SELECT * FROM pratos WHERE id = ?";
+$stmt = mysqli_prepare($conn, $sql);
+mysqli_stmt_bind_param($stmt, 'i', $id);
+mysqli_stmt_execute($stmt);
+$resultadoPrato = mysqli_stmt_get_result($stmt);
+$prato = mysqli_fetch_assoc($resultadoPrato);
+
+if (!$prato) {
+    die('Prato não encontrado.');
+}
+
+$sql = "SELECT * FROM usuarios";
+$resultado = mysqli_query($conn, $sql);
+
+if ($resultado === false) {
+    die('Erro ao consultar usuários: ' . mysqli_error($conn));
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nome = trim($_POST['nome']);
     $descricao = trim($_POST['descricao']);
-    $preco = trim($_POST['preco']);
+    $preco = $_POST['preco'];
     $categoria = trim($_POST['categoria']);
-    $usuario_id = trim($_POST['usuario_id']);
+    $usuario_id = (int) $_POST['usuario'];
 
-    if (!empty($nome) && !empty($descricao) && !empty($preco) && !empty($categoria) && !empty($usuario_id)) {
-        $stmt = $pdo->prepare("
-            UPDATE pratos 
-            SET nome = :nome, descricao = :descricao, preco = :preco, categoria = :categoria, usuario_id = :usuario_id 
-            WHERE id = :id
-        ");
-        $stmt->bindParam(':nome', $nome);
-        $stmt->bindParam(':descricao', $descricao);
-        $stmt->bindParam(':preco', $preco);
-        $stmt->bindParam(':categoria', $categoria);
-        $stmt->bindParam(':usuario_id', $usuario_id);
-        $stmt->bindParam(':id', $id);
-        $stmt->execute();
+    $sql = "UPDATE pratos SET nome = ?, descricao = ?, preco = ?, categoria = ?, id_usuario = ? WHERE id = ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, 'ssdsi', $nome, $descricao, $preco, $categoria, $usuario_id, $id);
 
-        header("Location: index.php");
-        exit;
+    if (mysqli_stmt_execute($stmt)) {
+        echo "Prato atualizado com sucesso!";
+        echo "<br><a href='../index.php'>Voltar</a>";
+        exit();
+    } else {
+        echo "Erro ao atualizar prato: " . mysqli_error($conn);
     }
 }
 
-$stmt = $pdo->prepare("SELECT * FROM pratos WHERE id = :id");
-$stmt->bindParam(':id', $id);
-$stmt->execute();
-$prato = $stmt->fetch(PDO::FETCH_ASSOC);
-
-if (!$prato) {
-    header('Location: index.php');
-    exit;
-}
-
-$stmt_users = $pdo->query("SELECT * FROM usuarios ORDER BY nome ASC");
-$usuarios = $stmt_users->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Prato</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../styles/style.css">
 </head>
+
 <body>
+    <form method="POST">
 
-    <div class="card" style="max-width: 500px; margin: 40px auto;">
-        <div class="card-header">
-            <h2>Editar Prato</h2>
-        </div>
-        <form action="" method="POST">
-            <div class="form-group">
-                <label>Nome do Prato</label>
-                <input type="text" name="nome" value="<?= htmlspecialchars($prato['nome']) ?>" required>
-            </div>
-            <div class="form-group">
-                <label>Descrição</label>
-                <textarea name="descricao" required><?= htmlspecialchars($prato['descricao']) ?></textarea>
-            </div>
-            <div class="form-row">
-                <div class="form-group">
-                    <label>Preço (R$)</label>
-                    <input type="number" step="0.01" name="preco" value="<?= $prato['preco'] ?>" required>
-                </div>
-                <div class="form-group">
-                    <label>Categoria</label>
-                    <input type="text" name="categoria" value="<?= htmlspecialchars($prato['categoria']) ?>" required>
-                </div>
-            </div>
-            <div class="form-group">
-                <label>Responsável</label>
-                <select name="usuario_id" required>
-                    <?php foreach ($usuarios as $u): ?>
-                        <option value="<?= $u['id'] ?>" <?= $prato['usuario_id'] == $u['id'] ? 'selected' : '' ?>>
-                            <?= htmlspecialchars($u['nome']) ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
-
-            <button type="submit" class="btn-primary">Salvar Alterações</button>
-            <a href="index.php" style="display: block; text-align: center; margin-top: 15px; color: var(--text-muted); text-decoration: none;">Cancelar</a>
-        </form>
-    </div>
+        <label for="nome">Nome:</label>
+        <input type="text" name="nome" id="nome" value="<?php echo htmlspecialchars($prato['nome']); ?>" required>
+        <label for="descricao">Descrição:</label>
+        <input type="text" name="descricao" id="descricao" value="<?php echo htmlspecialchars($prato['descricao']); ?>" required>
+        <label for="preco">Preço:</label>
+        <input type="number" name="preco" id="preco" value="<?php echo htmlspecialchars($prato['preco']); ?>" step="0.01" required>
+        <label for="categoria">Categoria:</label>
+        <input type="text" name="categoria" id="categoria" value="<?php echo htmlspecialchars($prato['categoria']); ?>" required>
+        <label for="usuario">Usuário:</label>
+        <select name="usuario" id="usuario" required>
+            <option value="">Selecione um usuário</option>
+            <?php
+            while ($row = mysqli_fetch_assoc($resultado)) {
+                $selected = ($row['id'] == $prato['id_usuario']) ? 'selected' : '';
+                echo "<option value='{$row['id']}' {$selected}>{$row['nome']}</option>";
+            }
+            ?>
+        </select>
+        <button type="submit">Atualizar Prato</button>
+    </form>
+    <button type="button" onclick="window.location.href='../index.php'">Voltar</button>
 
 </body>
+
 </html>

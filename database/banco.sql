@@ -1,20 +1,19 @@
-CREATE DATABASE IF NOT EXISTS restaurante_ícaro;
-USE restaurante_ícaro;
+create database restaurante_icaro;
+use restaurante_icaro;
 
-
-CREATE TABLE IF NOT EXISTS usuarios (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL,
-    email VARCHAR(100) NOT NULL UNIQUE
+create table usuarios (
+    id int primary key auto_increment,
+    nome varchar(100) not null,
+    email varchar(100) not null
 );
 
+create table pratos (
+    id int primary key auto_increment,
+    nome varchar(100) not null,
+    descricao text not null,
+    preco decimal(10,2) not null,
+    categoria varchar(50) not null,
 
-CREATE TABLE IF NOT EXISTS pratos (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL,
-    descricao TEXT NOT NULL,
-    preco DECIMAL(10,2) NOT NULL,
-    categoria VARCHAR(50) NOT NULL,
-    usuario_id INT NOT NULL,
-    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
+    id_usuario int not null,
+    foreign key (id_usuario) references usuarios(id)
 );
