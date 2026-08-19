@@ -3,7 +3,8 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-require_once 'conexao.php';
+// Ajustado para a subpasta infra/
+require_once 'infra/conexao.php';
 
 // Cadastrar Usuário
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cadastrar_usuario'])) {
@@ -73,7 +74,8 @@ $pratos = $stmt_pratos->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestão do Restaurante</title>
-    <link rel="stylesheet" href="style.css">
+    <!-- Caminho atualizado para a pasta style/ -->
+    <link rel="stylesheet" href="style/style.css">
 </head>
 <body>
 
@@ -191,8 +193,9 @@ $pratos = $stmt_pratos->fetchAll(PDO::FETCH_ASSOC);
                                         </div>
                                     </td>
                                     <td class="text-center">
-                                        <a href="editar_prato.php?id=<?= $p['id'] ?>" class="btn-editar">Editar</a>
-                                        <a href="excluir_prato.php?id=<?= $p['id'] ?>" class="btn-excluir" onclick="return confirm('Tem certeza que deseja excluir este prato?')">Excluir</a>
+                                        <!-- Atualizados para apontar para a pasta public/ -->
+                                        <a href="public/editar_prato.php?id=<?= $p['id'] ?>" class="btn-editar">Editar</a>
+                                        <a href="public/excluir_prato.php?id=<?= $p['id'] ?>" class="btn-excluir" onclick="return confirm('Tem certeza que deseja excluir este prato?')">Excluir</a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
