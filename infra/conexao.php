@@ -2,12 +2,12 @@
 $host = "localhost";
 $usuario = "root";
 $senha = "";
-$banco = "restaurante_ícaro";
+$banco = "restaurante_icaro";
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$banco;charset=utf8", $usuario, $senha);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
-    echo "Erro de conexão com o banco: " . $e->getMessage();
-    exit;
+    die("Erro de conexão com o banco: " . $e->getMessage());
 }
+?>
