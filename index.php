@@ -1,5 +1,5 @@
 <?php
-require_once 'infra/conexao.php';
+require_once __DIR__ . '/infra/conexao.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cadastrar_usuario'])) {
     $nome = trim($_POST['nome'] ?? '');
@@ -50,6 +50,7 @@ $pratos = $stmt_pratos->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <title>Gestão do Restaurante</title>
+    <link rel="stylesheet" href="style/style.css">
 </head>
 <body>
     <h1>Sistema de Gestão do Restaurante</h1>
@@ -85,6 +86,7 @@ $pratos = $stmt_pratos->fetchAll(PDO::FETCH_ASSOC);
                 <th>Preço</th>
                 <th>Categoria</th>
                 <th>Responsável</th>
+                <th>Ações</th>
             </tr>
         </thead>
         <tbody>
@@ -95,6 +97,10 @@ $pratos = $stmt_pratos->fetchAll(PDO::FETCH_ASSOC);
                     <td>R$ <?= number_format($p['preco'], 2, ',', '.') ?></td>
                     <td><?= htmlspecialchars($p['categoria']) ?></td>
                     <td><?= htmlspecialchars($p['autor']) ?></td>
+                    <td>
+                        <a href="public/editar_prato.php?id=<?= $p['id'] ?>">Editar</a>
+                        <a href="public/excluir_prato.php?id=<?= $p['id'] ?>">Excluir</a>
+                    </td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
