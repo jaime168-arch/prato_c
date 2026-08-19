@@ -3,7 +3,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// Conexão vinda da pasta infra/
+// Conexão apontando para a pasta infra/
 require_once 'infra/conexao.php';
 
 // Cadastrar Usuário
@@ -21,18 +21,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cadastrar_usuario']))
     }
 }
 
-// Cadastrar Prato
+// Cadastrar Prato (Incluindo a descricao exigida pelo seu banco)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cadastrar_prato'])) {
     $nome = trim($_POST['nome']);
     $preco = trim($_POST['preco']);
     $categoria = trim($_POST['categoria']);
+    $descricao = trim($_POST['descricao']);
     $usuario_id = trim($_POST['usuario_id']);
 
     if (!empty($nome) && !empty($preco) && !empty($categoria) && !empty($usuario_id)) {
-        $stmt = $pdo->prepare("INSERT INTO pratos (nome, preco, categoria, usuario_id) VALUES (:nome, :preco, :categoria, :usuario_id)");
+        $stmt = $pdo->prepare("INSERT INTO pratos (nome, preco, categoria, descricao, usuario_id) VALUES (:nome, :preco, :categoria, :descricao, :usuario_id)");
         $stmt->bindParam(':nome', $nome);
         $stmt->bindParam(':preco', $preco);
         $stmt->bindParam(':categoria', $categoria);
+        $stmt->bindParam(':descricao', $descricao);
         $stmt->bindParam(':usuario_id', $usuario_id);
         $stmt->execute();
         header("Location: index.php");
@@ -74,7 +76,7 @@ $pratos = $stmt_pratos->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestão do Restaurante</title>
-    <!-- CSS vindo da pasta style/ -->
+    <!-- Vinculando o CSS da pasta style/ -->
     <link rel="stylesheet" href="style/style.css">
 </head>
 <body>
@@ -87,6 +89,7 @@ $pratos = $stmt_pratos->fetchAll(PDO::FETCH_ASSOC);
     <main>
         <section class="container">
             
+            <!-- FORMULÁRIO DE COLABORADOR -->
             <div class="card">
                 <div class="card-header">
                     <h2>Cadastrar Colaborador</h2>
@@ -106,6 +109,7 @@ $pratos = $stmt_pratos->fetchAll(PDO::FETCH_ASSOC);
                 </form>
             </div>
 
+            <!-- FORMULÁRIO DE PRATO -->
             <div class="card">
                 <div class="card-header">
                     <h2>Cadastrar Novo Prato</h2>
@@ -128,6 +132,11 @@ $pratos = $stmt_pratos->fetchAll(PDO::FETCH_ASSOC);
                     </div>
 
                     <div class="form-group">
+                        <label for="desc_prato">Descrição do Prato</label>
+                        <input type="text" id="desc_prato" name="descricao" placeholder="Ex: Acompanha molho especial">
+                    </div>
+
+                    <div class="form-group">
                         <label for="responsavel_prato">Responsável pelo Cadastro</label>
                         <select id="responsavel_prato" name="usuario_id" required>
                             <option value="">Selecione um colaborador...</option>
@@ -145,6 +154,7 @@ $pratos = $stmt_pratos->fetchAll(PDO::FETCH_ASSOC);
 
         </section>
 
+        <!-- FILTRO DE PRATOS -->
         <section class="filtro-box">
             <form action="index.php" method="GET" class="filtro-form">
                 <label for="filtro_user">
@@ -166,6 +176,7 @@ $pratos = $stmt_pratos->fetchAll(PDO::FETCH_ASSOC);
             </form>
         </section>
 
+        <!-- TABELA DE EXIBIÇÃO -->
         <section class="listagem">
             <h2>Pratos Cadastrados</h2>
             
@@ -176,6 +187,7 @@ $pratos = $stmt_pratos->fetchAll(PDO::FETCH_ASSOC);
                             <th>Prato</th>
                             <th>Preço</th>
                             <th>Categoria</th>
+                            <th>Descrição</th>
                             <th>Responsável</th>
                             <th class="text-center">Ações</th>
                         </tr>
@@ -187,13 +199,13 @@ $pratos = $stmt_pratos->fetchAll(PDO::FETCH_ASSOC);
                                     <td class="font-bold"><?= htmlspecialchars($p['nome']) ?></td>
                                     <td class="preco-tag">R$ <?= number_format($p['preco'], 2, ',', '.') ?></td>
                                     <td><span class="badge"><?= htmlspecialchars($p['categoria']) ?></span></td>
+                                    <td class="text-muted"><?= htmlspecialchars($p['descricao'] ?? '') ?></td>
                                     <td>
                                         <div class="autor-info">
                                             <strong><?= htmlspecialchars($p['autor']) ?></strong>
                                         </div>
                                     </td>
                                     <td class="text-center">
-                                        <!-- Apontando para a pasta public/ -->
                                         <a href="public/editar_prato.php?id=<?= $p['id'] ?>" class="btn-editar">Editar</a>
                                         <a href="public/excluir_prato.php?id=<?= $p['id'] ?>" class="btn-excluir" onclick="return confirm('Tem certeza que deseja excluir este prato?')">Excluir</a>
                                     </td>
@@ -201,7 +213,7 @@ $pratos = $stmt_pratos->fetchAll(PDO::FETCH_ASSOC);
                             <?php endforeach; ?>
                         <?php else: ?>
                             <tr>
-                                <td colspan="5" class="empty-state">
+                                <td colspan="6" class="empty-state">
                                     <p>Nenhum prato cadastrado no sistema.</p>
                                 </td>
                             </tr>
