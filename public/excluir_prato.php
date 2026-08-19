@@ -3,7 +3,7 @@ require_once 'conexao.php';
 
 $id = $_GET['id'] ?? null;
 
-if ($id){
+if ($id) {
     $stmt = $pdo->prepare("DELETE FROM pratos WHERE id = :id");
     $stmt->bindParam(':id', $id);
     $stmt->execute();
