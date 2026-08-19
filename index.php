@@ -16,6 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cadastrar_usuario']))
     }
 }
 
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cadastrar_prato'])) {
     $nome = trim($_POST['nome']);
     $descricao = trim($_POST['descricao']);
@@ -39,6 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cadastrar_prato'])) {
 
 $stmt_users = $pdo->query("SELECT * FROM usuarios ORDER BY nome ASC");
 $usuarios = $stmt_users->fetchAll(PDO::FETCH_ASSOC);
+
 
 $usuario_filtro = isset($_GET['usuario_id']) ? $_GET['usuario_id'] : '';
 
@@ -73,19 +75,20 @@ $pratos = $stmt_pratos->fetchAll(PDO::FETCH_ASSOC);
 </head>
 <body>
 
+    
     <header class="main-header">
-        <h1>🍽️ Sistema de Gestão do Restaurante</h1>
+        <h1>Sistema de Gestão do Restaurante</h1>
         <p>Controle centralizado de colaboradores e cardápio</p>
     </header>
 
     <main>
-
+        
         <section class="container">
             
-      
+            
             <div class="card">
                 <div class="card-header">
-                    <h2>👤 Cadastrar Colaborador</h2>
+                    <h2>Cadastrar Colaborador</h2>
                 </div>
                 <form action="index.php" method="POST">
                     <div class="form-group">
@@ -97,15 +100,15 @@ $pratos = $stmt_pratos->fetchAll(PDO::FETCH_ASSOC);
                         <input type="email" id="email_usuario" name="email" placeholder="exemplo@restaurante.com" required>
                     </div>
                     <button type="submit" name="cadastrar_usuario" class="btn-primary">
-                        <span>+</span> Cadastrar Colaborador
+                        Cadastrar Colaborador
                     </button>
                 </form>
             </div>
 
-  
+           
             <div class="card">
                 <div class="card-header">
-                    <h2>🍲 Cadastrar Novo Prato</h2>
+                    <h2>Cadastrar Novo Prato</h2>
                 </div>
                 <form action="index.php" method="POST">
                     <div class="form-group">
@@ -139,17 +142,18 @@ $pratos = $stmt_pratos->fetchAll(PDO::FETCH_ASSOC);
                     </div>
 
                     <button type="submit" name="cadastrar_prato" class="btn-primary">
-                        <span>+</span> Cadastrar Prato
+                        Cadastrar Prato
                     </button>
                 </form>
             </div>
 
         </section>
 
+       
         <section class="filtro-box">
             <form action="index.php" method="GET" class="filtro-form">
                 <label for="filtro_user">
-                    🔍 <strong>Filtrar Cardápio por Responsável:</strong>
+                    <strong>Filtrar Cardápio por Responsável:</strong>
                 </label>
                 <div class="filtro-controls">
                     <select name="usuario_id" id="filtro_user" onchange="this.form.submit()">
@@ -161,15 +165,15 @@ $pratos = $stmt_pratos->fetchAll(PDO::FETCH_ASSOC);
                         <?php endforeach; ?>
                     </select>
                     <?php if (!empty($usuario_filtro)): ?>
-                        <a href="index.php" class="btn-limpar">Limpar Filtro ✕</a>
+                        <a href="index.php" class="btn-limpar">Limpar Filtro</a>
                     <?php endif; ?>
                 </div>
             </form>
         </section>
 
-        
+       
         <section class="listagem">
-            <h2>📋 Pratos Cadastrados</h2>
+            <h2>Pratos Cadastrados</h2>
             
             <div class="table-responsive">
                 <table>
@@ -193,13 +197,12 @@ $pratos = $stmt_pratos->fetchAll(PDO::FETCH_ASSOC);
                                     <td><span class="badge"><?= htmlspecialchars($p['categoria']) ?></span></td>
                                     <td>
                                         <div class="autor-info">
-                                            <span class="avatar-icon">👤</span>
                                             <strong><?= htmlspecialchars($p['autor']) ?></strong>
                                         </div>
                                     </td>
                                     <td class="text-center">
-                                        <a href="editar_prato.php?id=<?= $p['id'] ?>" class="btn-editar" title="Editar Prato">✏️ Editar</a>
-                                        <a href="excluir_prato.php?id=<?= $p['id'] ?>" class="btn-excluir" onclick="return confirm('Tem certeza que deseja excluir este prato?')" title="Excluir Prato">🗑️ Excluir</a>
+                                        <a href="editar_prato.php?id=<?= $p['id'] ?>" class="btn-editar" title="Editar Prato">Editar</a>
+                                        <a href="excluir_prato.php?id=<?= $p['id'] ?>" class="btn-excluir" onclick="return confirm('Tem certeza que deseja excluir este prato?')" title="Excluir Prato">Excluir</a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
