@@ -1,13 +1,18 @@
 <?php
+// Força a exibição de qualquer erro de conexão na tela
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 $host = 'localhost';
-$dbname = 'restaurante_icaro'; 
+$dbname = 'restaurante_icaro'; // Nome exato que está no seu phpMyAdmin
 $usuario = 'root';
-$senha = '';
+$senha = ''; 
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $usuario, $senha);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
-    die("Erro na conexão: " . $e->getMessage());
+    // Se der erro no banco, vai escrever o motivo exato aqui!
+    die("<h1>Erro de Conexão com o Banco:</h1> " . $e->getMessage());
 }
-?>
