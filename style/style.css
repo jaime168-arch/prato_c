@@ -97,8 +97,7 @@ h2 {
 }
 
 form input,
-form select,
-form textarea {
+form select {
   width: 100%;
   padding: 10px 14px;
   border: 1px solid var(--border-color);
@@ -109,14 +108,8 @@ form textarea {
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-form textarea {
-  resize: vertical;
-  min-height: 80px;
-}
-
 form input:focus,
-form select:focus,
-form textarea:focus {
+form select:focus {
   outline: none;
   border-color: var(--info);
   box-shadow: 0 0 0 3px rgba(41, 128, 185, 0.15);
@@ -152,7 +145,8 @@ form textarea:focus {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
+  gap: 16px;
+  flex-wrap: wrap;
 }
 
 .filtro-controls {
@@ -162,7 +156,7 @@ form textarea:focus {
 }
 
 .filtro-controls select {
-  max-width: 300px;
+  min-width: 200px;
 }
 
 .btn-limpar {
@@ -231,6 +225,7 @@ tr:hover {
   text-decoration: none;
   font-size: 0.875rem;
   font-weight: 600;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .btn-editar {
