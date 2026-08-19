@@ -1,18 +1,13 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-$host = "localhost";
-$usuario = "root";
-$senha = "";
-$banco = "restaurante_icaro";
+$host = 'localhost';
+$dbname = 'restaurante_icaro'; 
+$usuario = 'root';
+$senha = '';
 
 try {
-    $pdo = new PDO("mysql:host=$host;dbname=$banco;charset=utf8", $usuario, $senha);
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $usuario, $senha);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
-    echo "<strong>Erro na conexão com o Banco de Dados:</strong> " . $e->getMessage();
-    exit;
+    die("Erro na conexão: " . $e->getMessage());
 }
 ?>
