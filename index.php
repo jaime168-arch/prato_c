@@ -3,7 +3,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// Ajustado para a subpasta infra/
+// Conexão vinda da pasta infra/
 require_once 'infra/conexao.php';
 
 // Cadastrar Usuário
@@ -74,7 +74,7 @@ $pratos = $stmt_pratos->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestão do Restaurante</title>
-    <!-- Caminho atualizado para a pasta style/ -->
+    <!-- CSS vindo da pasta style/ -->
     <link rel="stylesheet" href="style/style.css">
 </head>
 <body>
@@ -193,7 +193,7 @@ $pratos = $stmt_pratos->fetchAll(PDO::FETCH_ASSOC);
                                         </div>
                                     </td>
                                     <td class="text-center">
-                                        <!-- Atualizados para apontar para a pasta public/ -->
+                                        <!-- Apontando para a pasta public/ -->
                                         <a href="public/editar_prato.php?id=<?= $p['id'] ?>" class="btn-editar">Editar</a>
                                         <a href="public/excluir_prato.php?id=<?= $p['id'] ?>" class="btn-excluir" onclick="return confirm('Tem certeza que deseja excluir este prato?')">Excluir</a>
                                     </td>
