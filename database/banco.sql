@@ -1,11 +1,13 @@
-CREATE DATABASE IF NOT EXISTS restaurante_icaro;
-USE restaurante_icaro;
+CREATE DATABASE IF NOT EXISTS restaurante_ícaro;
+USE restaurante_ícaro;
+
 
 CREATE TABLE IF NOT EXISTS usuarios (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE
 );
+
 
 CREATE TABLE IF NOT EXISTS pratos (
     id INT AUTO_INCREMENT PRIMARY KEY,
