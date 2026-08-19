@@ -1,12 +1,11 @@
 <?php
-
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 require_once 'conexao.php';
 
-
+// Cadastrar Usuário
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cadastrar_usuario'])) {
     $nome = trim($_POST['nome']);
     $email = trim($_POST['email']);
@@ -21,18 +20,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cadastrar_usuario']))
     }
 }
 
-
+// Cadastrar Prato
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cadastrar_prato'])) {
     $nome = trim($_POST['nome']);
-    $descricao = trim($_POST['descricao']);
     $preco = trim($_POST['preco']);
     $categoria = trim($_POST['categoria']);
     $usuario_id = trim($_POST['usuario_id']);
 
-    if (!empty($nome) && !empty($descricao) && !empty($preco) && !empty($categoria) && !empty($usuario_id)) {
-        $stmt = $pdo->prepare("INSERT INTO pratos (nome, descricao, preco, categoria, usuario_id) VALUES (:nome, :descricao, :preco, :categoria, :usuario_id)");
+    if (!empty($nome) && !empty($preco) && !empty($categoria) && !empty($usuario_id)) {
+        $stmt = $pdo->prepare("INSERT INTO pratos (nome, preco, categoria, usuario_id) VALUES (:nome, :preco, :categoria, :usuario_id)");
         $stmt->bindParam(':nome', $nome);
-        $stmt->bindParam(':descricao', $descricao);
         $stmt->bindParam(':preco', $preco);
         $stmt->bindParam(':categoria', $categoria);
         $stmt->bindParam(':usuario_id', $usuario_id);
@@ -42,10 +39,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cadastrar_prato'])) {
     }
 }
 
+// Buscar Usuários
 $stmt_users = $pdo->query("SELECT * FROM usuarios ORDER BY nome ASC");
 $usuarios = $stmt_users->fetchAll(PDO::FETCH_ASSOC);
 
-/
+// Filtrar Pratos
 $usuario_filtro = isset($_GET['usuario_id']) ? $_GET['usuario_id'] : '';
 
 if (!empty($usuario_filtro)) {
@@ -87,7 +85,6 @@ $pratos = $stmt_pratos->fetchAll(PDO::FETCH_ASSOC);
     <main>
         <section class="container">
             
-            
             <div class="card">
                 <div class="card-header">
                     <h2>Cadastrar Colaborador</h2>
@@ -107,7 +104,6 @@ $pratos = $stmt_pratos->fetchAll(PDO::FETCH_ASSOC);
                 </form>
             </div>
 
-            
             <div class="card">
                 <div class="card-header">
                     <h2>Cadastrar Novo Prato</h2>
@@ -116,10 +112,6 @@ $pratos = $stmt_pratos->fetchAll(PDO::FETCH_ASSOC);
                     <div class="form-group">
                         <label for="nome_prato">Nome do Prato</label>
                         <input type="text" id="nome_prato" name="nome" placeholder="Ex: Risoto de Cogumelos" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="descricao_prato">Descrição</label>
-                        <textarea id="descricao_prato" name="descricao" placeholder="Ingredientes e detalhes do prato..." required></textarea>
                     </div>
                     
                     <div class="form-row">
@@ -151,7 +143,6 @@ $pratos = $stmt_pratos->fetchAll(PDO::FETCH_ASSOC);
 
         </section>
 
-      
         <section class="filtro-box">
             <form action="index.php" method="GET" class="filtro-form">
                 <label for="filtro_user">
@@ -173,7 +164,6 @@ $pratos = $stmt_pratos->fetchAll(PDO::FETCH_ASSOC);
             </form>
         </section>
 
-        
         <section class="listagem">
             <h2>Pratos Cadastrados</h2>
             
@@ -182,7 +172,6 @@ $pratos = $stmt_pratos->fetchAll(PDO::FETCH_ASSOC);
                     <thead>
                         <tr>
                             <th>Prato</th>
-                            <th>Descrição</th>
                             <th>Preço</th>
                             <th>Categoria</th>
                             <th>Responsável</th>
@@ -194,7 +183,6 @@ $pratos = $stmt_pratos->fetchAll(PDO::FETCH_ASSOC);
                             <?php foreach ($pratos as $p): ?>
                                 <tr>
                                     <td class="font-bold"><?= htmlspecialchars($p['nome']) ?></td>
-                                    <td class="text-muted"><?= htmlspecialchars($p['descricao']) ?></td>
                                     <td class="preco-tag">R$ <?= number_format($p['preco'], 2, ',', '.') ?></td>
                                     <td><span class="badge"><?= htmlspecialchars($p['categoria']) ?></span></td>
                                     <td>
@@ -210,7 +198,7 @@ $pratos = $stmt_pratos->fetchAll(PDO::FETCH_ASSOC);
                             <?php endforeach; ?>
                         <?php else: ?>
                             <tr>
-                                <td colspan="6" class="empty-state">
+                                <td colspan="5" class="empty-state">
                                     <p>Nenhum prato cadastrado no sistema.</p>
                                 </td>
                             </tr>
