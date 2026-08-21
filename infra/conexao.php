@@ -1,13 +1,12 @@
 <?php
+$host = "localhost";
+$usuario = "root";
+$senha = "root";
+$banco = "restaurante_icaro";
 
-    $host = "localhost";
-    $user = "root";
-    $password = "";
-    $database = "restaurante_icaro";
-    $conn = mysqli_connect($host, $user, $password, $database);
+$conn = mysqli_connect($host, $usuario, $senha, $banco);
 
-    if (!$conn) {
-        die("Connection failed: " . mysqli_connect_error());
-    }
-
+if (!$conn) {
+    die("Falha na conexão: " . mysqli_connect_error());
+}
 ?>
